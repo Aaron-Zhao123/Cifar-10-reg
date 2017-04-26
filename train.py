@@ -444,7 +444,8 @@ def main(argv = None):
                     WITH_BIASES = val
                 if (opt == '-lambda1'):
                     lambda_1 = val
-                if (opt == '-lambda2')
+                if (opt == '-lambda2'):
+                    lambda_2 = val
 
 
             print('pruning thresholds are {}'.format(prune_thresholds))
