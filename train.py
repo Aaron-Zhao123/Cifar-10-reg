@@ -515,7 +515,7 @@ def main(argv = None):
         images = pre_process(x, TRAIN)
 
         l1, l2, pred = cov_network(images, weights, biases, keep_prob)
-            cross_entropy = tf.nn.softmax_cross_entropy_with_logits(logits = pred, labels = y)
+        cross_entropy = tf.nn.softmax_cross_entropy_with_logits(logits = pred, labels = y)
         loss_value = tf.reduce_mean(cross_entropy)
 
         correct_prediction = tf.equal(tf.argmax(pred,1), tf.argmax(y,1))
@@ -576,7 +576,7 @@ def main(argv = None):
             if TRAIN == 1:
                 # for i in range(0,60000):
                 # for i in range(0,6):
-                for i in range(0,60000):
+                for i in range(0,100000):
                     (batch_x, batch_y) = t_data.feed_next_batch(BATCH_SIZE)
                     train_acc, cross_en = sess.run([accuracy, loss_value], feed_dict = {
                                     x: batch_x,
