@@ -22,6 +22,7 @@ f_name = compute_file_name(pcov, pfc)
 parent_dir = 'assets/withbiases/'
 # lr = 1e-5
 lr = 1e-4
+with_biases = False
 param = [
     ('-pcov1',pcov[0]),
     ('-pcov2',pcov[1]),
