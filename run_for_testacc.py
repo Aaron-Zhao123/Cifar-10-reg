@@ -13,8 +13,8 @@ def compute_file_name(pcov, pfc):
 
 acc_list = []
 count = 0
-pcov = [40., 66.]
-pfc = [85., 66., 40.]
+pcov = [0., 0.]
+pfc = [0., 0., 0.]
 retrain = 0
 f_name = compute_file_name(pcov, pfc)
 
@@ -22,6 +22,7 @@ f_name = compute_file_name(pcov, pfc)
 # initial run
 parent_dir = '/Users/aaron/Projects/Mphil_project/tmp_cifar10/async_pruning/'
 parent_dir = 'assets/withbiases/'
+parent_dir = './'
 
 run = 1
 hist = []
@@ -47,7 +48,10 @@ while (run):
         ('-train', False),
         ('-prune', False),
         ('-parent_dir', parent_dir),
-        ('-lr', lr)
+        ('-lr', lr),
+        ('-parent_dir', parent_dir),
+        ('-lambda1', 1e-3),
+        ('-lambda2', 1e-3)
         ]
     acc = train.main(param)
     hist.append((pcov[:], pfc[:], acc))
