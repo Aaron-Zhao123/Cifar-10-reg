@@ -134,8 +134,8 @@ def initialize_weights_mask(first_time_training, mask_dir, file_name):
             'fc3': np.ones([NUM_CLASSES])
         }
 
-        # with open(mask_dir + 'maskcov0cov0fc0fc0fc0.pkl', 'wb') as f:
-        #     pickle.dump((weights_mask,biases_mask), f)
+        with open(mask_dir + 'maskcov0cov0fc0fc0fc0.pkl', 'wb') as f:
+            pickle.dump((weights_mask,biases_mask), f)
     else:
         with open(mask_dir + file_name,'rb') as f:
             (weights_mask, biases_mask) = pickle.load(f)
