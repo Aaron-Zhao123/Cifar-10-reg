@@ -29,7 +29,7 @@ param = [
     ('-pfc1',pfc[0]),
     ('-pfc2',pfc[1]),
     ('-pfc3',pfc[2]),
-    ('-first_time', False),
+    ('-first_time', True),
     ('-file_name', f_name),
     ('-train', True),
     ('-prune', False),
