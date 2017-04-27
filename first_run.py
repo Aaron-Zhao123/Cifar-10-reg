@@ -21,7 +21,7 @@ retrain = 0
 f_name = compute_file_name(pcov, pfc)
 parent_dir = './'
 # lr = 1e-5
-lr = 1e-3
+lr = 1e-4
 with_biases = False
 param = [
     ('-pcov1',pcov[0]),

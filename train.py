@@ -540,8 +540,8 @@ def main(argv = None):
                                       LEARNING_RATE_DECAY_FACTOR,
                                       staircase=True)
 
-        opt = tf.train.GradientDescentOptimizer(lr_tf)
-        # opt = tf.train.AdamOptimizer(lr)
+        # opt = tf.train.GradientDescentOptimizer(lr_tf)
+        opt = tf.train.AdamOptimizer(lr)
         grads = opt.compute_gradients(loss_value)
         org_grads = [(ClipIfNotNone(grad), var) for grad, var in grads]
         new_grads = mask_gradients(weights, org_grads, weights_mask, biases, biases_mask, WITH_BIASES)
