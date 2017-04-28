@@ -605,19 +605,9 @@ def main(argv = None):
                                                     y: labels_test,
                                                     keep_prob: 1.0})
                         # if (np.mean(train_acc) > 0.5):
-                        if (np.mean(accuracy_list) > 0.8 and train_acc >= 0.84 and test_acc > 0.79):
-                            print("training accuracy is large, show the list: {}".format(accuracy_list))
-                            # test_acc = sess.run(accuracy, feed_dict = {
-                            #                         x: images_test,
-                            #                         y: labels_test,
-                            #                         keep_prob: 1.0})
-                            # accuracy_list = np.zeros(30)
-                            # accuracy_list = np.zeros(5)
-                            # accuracy_list = np.zeros(30)
-                            # print('test accuracy is {}'.format(test_acc))
-                            # if (test_acc > 0.78 and first_time_load):
-                            # print('Exiting the training, test accuracy is {}'.format(test_acc))
-                            break
+                            if (np.mean(accuracy_list) > 0.8 and train_acc >= 0.84 and test_acc > 0.79):
+                                print("training accuracy is large, show the list: {}".format(accuracy_list))
+                                break
                     _ = sess.run(train_step, feed_dict = {
                                     x: batch_x,
                                     y: batch_y,
