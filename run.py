@@ -49,7 +49,7 @@ print('accuracy summary: {}'.format(acc_list))
 run = 1
 hist = [(pcov, pfc, test_acc)]
 pcov = [0., 0.]
-pfc = [0., 0., 0.]
+pfc = [10., 0., 0.]
 retrain_cnt = 0
 roundrobin = 0
 with_biases = True
