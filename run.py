@@ -118,7 +118,7 @@ while (run):
     f_name = compute_file_name(pcov, pfc)
     # pcov[1] = pcov[1] + 10.
     if (acc > 0.808):
-        pfc[0] = pfc[0] + 5.
+        pfc[0] = pfc[0] + 10.
         lr = 1e-4
         retrain = 0
         acc_list.append((pcov,pfc,acc))
