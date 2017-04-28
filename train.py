@@ -479,7 +479,7 @@ def main(argv = None):
         # model_name = '../tf_official_docker/tmp.pkl'
 
 
-        (weights_mask,biases_mask)= initialize_weights_mask(first_time_load, mask_dir, 'mask'+file_name + '.pkl')
+        (weights_mask, biases_mask)= initialize_weights_mask(first_time_load, mask_dir, 'mask'+file_name + '.pkl')
         cifar10.maybe_download_and_extract()
         class_names = cifar10.load_class_names()
 
@@ -605,7 +605,7 @@ def main(argv = None):
                                                     y: labels_test,
                                                     keep_prob: 1.0})
                         # if (np.mean(train_acc) > 0.5):
-                        if (np.mean(accuracy_list) > 0.81 and train_acc >= 0.85 and test_acc > 0.79):
+                        if (np.mean(accuracy_list) > 0.8 and train_acc >= 0.84 and test_acc > 0.79):
                             print("training accuracy is large, show the list: {}".format(accuracy_list))
                             # test_acc = sess.run(accuracy, feed_dict = {
                             #                         x: images_test,
