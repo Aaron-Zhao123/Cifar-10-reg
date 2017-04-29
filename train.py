@@ -113,6 +113,7 @@ def prune_weights(prune_thresholds, weights, weights_mask, biases, biases_mask, 
         biases_mask[key] = np.abs(biase) > threshold
     with open(mask_dir + f_name, 'wb') as f:
         pickle.dump((weights_mask,biases_mask), f)
+    sys.exit()
 
 def initialize_weights_mask(first_time_training, mask_dir, file_name):
     NUM_CHANNELS = 3
