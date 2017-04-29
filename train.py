@@ -105,9 +105,6 @@ def prune_weights(cRates, weights, weights_mask, biases, biases_mask, mask_dir, 
         new_mask[key] = np.logical_or(((1 - mask_off) * weights_mask[key]),mask_on).astype(int)
     with open(mask_dir + f_name, 'wb') as f:
         pickle.dump((new_mask,biases_mask), f)
-    print(mask_dir + f_name)
-    prune_info(new_mask, 1)
-    sys.exit()
 
 def initialize_weights_mask(first_time_training, mask_dir, file_name):
     NUM_CHANNELS = 3
