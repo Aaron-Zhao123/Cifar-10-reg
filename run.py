@@ -22,117 +22,95 @@ f_name = compute_file_name(pcov, pfc)
 parent_dir = './'
 # lr = 1e-5
 lr = 1e-4
-with_biases = False
-
-# initial run
-param = [
-    ('-pcov1',pcov[0]),
-    ('-pcov2',pcov[1]),
-    ('-pfc1',pfc[0]),
-    ('-pfc2',pfc[1]),
-    ('-pfc3',pfc[2]),
-    ('-first_time', False),
-    ('-file_name', f_name),
-    ('-train', False),
-    ('-prune', False),
-    ('-lr', lr),
-    ('-with_biases', with_biases),
-    ('-parent_dir', parent_dir),
-    ('-lambda1', 1e-4),
-    ('-lambda2', 1e-5)
-    ]
-test_acc = train.main(param)
-print("first train")
-acc_list.append((pcov[:],pfc[:],test_acc))
-print('accuracy summary: {}'.format(acc_list))
-
-run = 1
-hist = [(pcov, pfc, test_acc)]
-pcov = [0., 0.]
-pfc = [10., 0., 0.]
+crates = {
+    'cov1': 0.,
+    'cov2': 0.,
+    'fc1': 1.0,
+    'fc2': 0.,
+    'fc3': 0.
+}
 retrain_cnt = 0
 roundrobin = 0
-with_biases = True
+with_biases = False
 # Prune
-while (run):
-    param = [
-        ('-pcov1',pcov[0]),
-        ('-pcov2',pcov[1]),
-        ('-pfc1',pfc[0]),
-        ('-pfc2',pfc[1]),
-        ('-pfc3',pfc[2]),
-        ('-first_time', False),
-        ('-file_name', f_name),
-        ('-train', False),
-        ('-prune', True),
-        ('-lr', lr),
-        ('-with_biases', with_biases),
-        ('-parent_dir', parent_dir),
-        ('-lambda1', 1e-4),
-        ('-lambda2', 1e-5)
-        ]
-    _ = train.main(param)
+while (crates['fc1'] < 3.5):
+    count = 0
+    iter_cnt = 0
+    while (iter_cnt < 7):
+        param = [
+            ('-cRates', crates),
+            ('-first_time', False),
+            ('-file_name', f_name),
+            ('-train', False),
+            ('-prune', True),
+            ('-lr', lr),
+            ('-with_biases', with_biases),
+            ('-parent_dir', parent_dir),
+            ('-lambda1', 1e-4),
+            ('-lambda2', 1e-5)
+            ]
+        _ = train.main(param)
 
-    # pruning saves the new models, masks
-    f_name = compute_file_name(pcov, pfc)
+        while (retrain < 10):
+            # TRAIN
+            param = [
+                ('-cRates', crates),
+                ('-first_time', False),
+                ('-file_name', f_name),
+                ('-train', True),
+                ('-prune', False),
+                ('-lr', lr),
+                ('-with_biases', with_biases),
+                ('-parent_dir', parent_dir),
+                ('-lambda1', 1e-4),
+                ('-lambda2', 1e-5)
+                ]
+            _ = train.main(param)
 
-    # TRAIN
-    param = [
-        ('-pcov1',pcov[0]),
-        ('-pcov2',pcov[1]),
-        ('-pfc1',pfc[0]),
-        ('-pfc2',pfc[1]),
-        ('-pfc3',pfc[2]),
-        ('-first_time', False),
-        ('-file_name', f_name),
-        ('-train', True),
-        ('-prune', False),
-        ('-lr', lr),
-        ('-with_biases', with_biases),
-        ('-parent_dir', parent_dir),
-        ('-lambda1', 1e-4),
-        ('-lambda2', 1e-5)
-        ]
-    _ = train.main(param)
-
-    # TEST
-
-    param = [
-        ('-pcov1',pcov[0]),
-        ('-pcov2',pcov[1]),
-        ('-pfc1',pfc[0]),
-        ('-pfc2',pfc[1]),
-        ('-pfc3',pfc[2]),
-        ('-first_time', False),
-        ('-file_name', f_name),
-        ('-train', False),
-        ('-prune', False),
-        ('-lr', lr),
-        ('-with_biases', with_biases),
-        ('-parent_dir', parent_dir),
-        ('-lambda1', 1e-4),
-        ('-lambda2', 1e-5)
-        ]
-    acc = train.main(param)
-    hist.append((pcov, pfc, acc))
-    f_name = compute_file_name(pcov, pfc)
-    # pcov[1] = pcov[1] + 10.
-    if (acc > 0.808):
-        pfc[0] = pfc[0] + 10.
-        lr = 1e-4
-        retrain = 0
-        acc_list.append((pcov,pfc,acc))
-    else:
-        retrain = retrain + 1
-        if (retrain == 5):
-            lr = lr / float(2)
-        if (retrain == 10):
-            lr = lr / float(5)
-        if (retrain > 15):
+            # TEST
+            param = [
+                ('-cRates', crates),
+                ('-first_time', False),
+                ('-file_name', f_name),
+                ('-train', False),
+                ('-prune', False),
+                ('-lr', lr),
+                ('-with_biases', with_biases),
+                ('-parent_dir', parent_dir),
+                ('-lambda1', 1e-4),
+                ('-lambda2', 1e-5)
+                ]
+            acc = train.main(param)
+            if (acc > 0.823):
+                lr = 1e-4
+                retrain = 0
+                break
+            else:
+                retrain = retrain + 1
+        if (acc > 0.808 or iter_cnt == 7):
+            crates['fc1'] = crates['fc1'] + 0.5
+            acc_list.append((crates,acc))
+            param = [
+                ('-first_time', False),
+                ('-train', False),
+                ('-prune', False),
+                ('-lr', lr),
+                ('-with_biases', with_biases),
+                ('-parent_dir', parent_dir),
+                ('-iter_cnt',iter_cnt),
+                ('-cRates',crates),
+                ('-save', True),
+                ('-lambda1', 1e-4),
+                ('-lambda2', 1e-5)
+                ]
+            _ = train.main(param)
             break
-    count = count + 1
+        else:
+            iter_cnt = iter_cnt + 1
+    if (iter_cnt > 7):
+        iter_cnt = iter_cnt - 1
     print('accuracy summary: {}'.format(acc_list))
-    print (acc)
+
 
 print('accuracy summary: {}'.format(acc_list))
 # acc_list = [0.82349998, 0.8233, 0.82319999, 0.81870002, 0.82050002, 0.80400002, 0.74940002, 0.66060001, 0.5011]
