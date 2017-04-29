@@ -100,11 +100,9 @@ def prune_weights(cRates, weights, weights_mask, biases, biases_mask, mask_dir, 
         w_eval = weights[key].eval()
         threshold_off = 0.9*(np.mean(w_eval) + cRates[key] * np.std(w_eval))
         threshold_on = 1.1*(np.mean(w_eval) + cRates[key] * np.std(w_eval))
-        # elements at this postion becomes zeros
         mask_off = np.abs(w_eval) < threshold_off
-        # elements at this postion becomes ones
         mask_on = np.abs(w_eval) > threshold_on
-        new_mask[key] = np.logical_or(((1 - mask_off) * org_masks[key]),mask_on).astype(int)
+        new_mask[key] = np.logical_or(((1 - mask_off) * weights_mask[key]),mask_on).astype(int)
     with open(mask_dir + f_name, 'wb') as f:
         pickle.dump((weights_mask,biases_mask), f)
     print(mask_dir + f_name)
