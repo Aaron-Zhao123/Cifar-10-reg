@@ -113,6 +113,8 @@ def prune_weights(prune_thresholds, weights, weights_mask, biases, biases_mask, 
         biases_mask[key] = np.abs(biase) > threshold
     with open(mask_dir + f_name, 'wb') as f:
         pickle.dump((weights_mask,biases_mask), f)
+    print(mask_dir + f_name)
+    prune_info(weights_mask, 1)
     sys.exit()
 
 def initialize_weights_mask(first_time_training, mask_dir, file_name):
@@ -158,8 +160,19 @@ def prune_info(weights, counting):
         print('fc3 has prunned {} percent of its weights'.format((total-non_zeros)*100/total))
         print('some numbers: non zeros:{}, total:{}'.format(non_zeros, total))
     if (counting == 1):
-        (non_zeros, total) = calculate_non_zero_weights(weights['fc1'].eval())
-        print('take fc1 as example, {} nonzeros, in total {} weights'.format(non_zeros, total))
+        (non_zeros, total) = calculate_non_zero_weights(weights['cov1'])
+        print('cov1 has prunned {} percent of its weights'.format((total-non_zeros)*100/total))
+        print('some numbers: non zeros:{}, total:{}'.format(non_zeros, total))
+        # print(weights['cov1'].eval())
+        (non_zeros, total) = calculate_non_zero_weights(weights['cov2'])
+        print('cov2 has prunned {} percent of its weights'.format((total-non_zeros)*100/total))
+        (non_zeros, total) = calculate_non_zero_weights(weights['fc1'])
+        print('fc1 has prunned {} percent of its weights'.format((total-non_zeros)*100/total))
+        (non_zeros, total) = calculate_non_zero_weights(weights['fc2'])
+        print('fc2 has prunned {} percent of its weights'.format((total-non_zeros)*100/total))
+        (non_zeros, total) = calculate_non_zero_weights(weights['fc3'])
+        print('fc3 has prunned {} percent of its weights'.format((total-non_zeros)*100/total))
+        print('some numbers: non zeros:{}, total:{}'.format(non_zeros, total))
 def plot_weights(weights,pruning_info):
         keys = ['cov1','cov2','fc1', 'fc2','fc2']
         fig, axrr = plt.subplots( 2, 2)  # create figure &  axis
