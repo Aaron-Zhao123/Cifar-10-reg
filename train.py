@@ -93,24 +93,18 @@ def initialize_variables(exist, file_name):
         }
     return (weights, biases)
 
-def prune_weights(prune_thresholds, weights, weights_mask, biases, biases_mask, mask_dir, f_name):
-    keys_cov = ['cov1', 'cov2']
-    keys_fc = ['fc1', 'fc2', 'fc3']
-    next_threshold = {}
-    for key in keys_cov:
-        weight = weights[key].eval()
-        biase = biases[key].eval()
-        threshold = np.percentile(np.abs(weight), prune_thresholds[key])
-        weights_mask[key] = np.abs(weight) > threshold
-        threshold = np.percentile(np.abs(biase), prune_thresholds[key])
-        biases_mask[key] = np.abs(biase) > threshold
-    for key in keys_fc:
-        weight = weights[key].eval()
-        biase = biases[key].eval()
-        threshold = np.percentile(np.abs(weight), prune_thresholds[key])
-        weights_mask[key] = np.abs(weight) > threshold
-        threshold = np.percentile(np.abs(biase), prune_thresholds[key])
-        biases_mask[key] = np.abs(biase) > threshold
+def prune_weights(cRates, weights, weights_mask, biases, biases_mask, mask_dir, f_name):
+    keys = ['cov1','cov2','fc1','fc2','fc3']
+    new_mask = {}
+    for key in keys:
+        w_eval = weights[key].eval()
+        threshold_off = 0.9*(np.mean(w_eval) + cRates[key] * np.std(w_eval))
+        threshold_on = 1.1*(np.mean(w_eval) + cRates[key] * np.std(w_eval))
+        # elements at this postion becomes zeros
+        mask_off = np.abs(w_eval) < threshold_off
+        # elements at this postion becomes ones
+        mask_on = np.abs(w_eval) > threshold_on
+        new_mask[key] = np.logical_or(((1 - mask_off) * org_masks[key]),mask_on).astype(int)
     with open(mask_dir + f_name, 'wb') as f:
         pickle.dump((weights_mask,biases_mask), f)
     print(mask_dir + f_name)
@@ -638,7 +632,7 @@ def main(argv = None):
             if (PRUNE):
                 print('saving pruned model ...')
                 f_name = compute_file_name(cRates)
-                prune_weights(  prune_thresholds,
+                prune_weights(  cRates,
                                 weights,
                                 weights_mask,
                                 biases,
