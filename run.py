@@ -45,7 +45,6 @@ while (crates['fc1'] < 3.5):
         param = [
             ('-cRates', crates),
             ('-first_time', False),
-            ('-file_name', f_name),
             ('-train', False),
             ('-prune', True),
             ('-lr', lr),
@@ -61,7 +60,6 @@ while (crates['fc1'] < 3.5):
             param = [
                 ('-cRates', crates),
                 ('-first_time', False),
-                ('-file_name', f_name),
                 ('-train', True),
                 ('-prune', False),
                 ('-lr', lr),
@@ -76,7 +74,6 @@ while (crates['fc1'] < 3.5):
             param = [
                 ('-cRates', crates),
                 ('-first_time', False),
-                ('-file_name', f_name),
                 ('-train', False),
                 ('-prune', False),
                 ('-lr', lr),
