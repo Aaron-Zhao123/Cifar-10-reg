@@ -18,7 +18,6 @@ count = 0
 pcov = [0., 0.]
 pfc = [0., 0., 0.]
 retrain = 0
-f_name = compute_file_name(pcov, pfc)
 parent_dir = 'assets/'
 # lr = 1e-5
 lr = 1e-4
