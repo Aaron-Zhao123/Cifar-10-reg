@@ -507,7 +507,7 @@ def main(argv = None):
             weights, biases = initialize_variables(PREV_MODEL_EXIST, '')
         else:
             PREV_MODEL_EXIST = 1
-            if (first_time_load):
+            if (save_for_next_iter):
                 file_name_part = org_file_name
             else:
                 file_name_part = compute_file_name(cRates)
