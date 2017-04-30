@@ -21,10 +21,7 @@ crates = {
     'fc3': 0.
 }
 retrain = 0
-f_name = compute_file_name(pcov, pfc)
 
-# f_name = 'pruningv00'
-# initial run
 parent_dir = '/Users/aaron/Projects/Mphil_project/tmp_cifar10/async_pruning/'
 parent_dir = 'assets'
 parent_dir = './'
