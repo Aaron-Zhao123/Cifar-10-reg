@@ -444,6 +444,8 @@ def main(argv = None):
                     lambda_2 = val
                 if (opt == '-save'):
                     save_for_next_iter = val
+                if (opt == '-org_file_name'):
+                    org_file_name = val
 
 
             print('pruning thresholds are {}'.format(prune_thresholds))
@@ -477,7 +479,10 @@ def main(argv = None):
         # model_name = '../tf_official_docker/tmp.pkl'
 
         file_name_part = compute_file_name(cRates)
-        (weights_mask, biases_mask)= initialize_weights_mask(first_time_load, mask_dir, 'mask'+file_name_part + '.pkl')
+        if (save_for_next_iter):
+            (weights_mask, biases_mask)= initialize_weights_mask(first_time_load, mask_dir, 'mask'+org_file_name + '.pkl')
+        else:
+            (weights_mask, biases_mask)= initialize_weights_mask(first_time_load, mask_dir, 'mask'+file_name_part + '.pkl')
         cifar10.maybe_download_and_extract()
         class_names = cifar10.load_class_names()
 
@@ -502,7 +507,10 @@ def main(argv = None):
             weights, biases = initialize_variables(PREV_MODEL_EXIST, '')
         else:
             PREV_MODEL_EXIST = 1
-            file_name_part = compute_file_name(cRates)
+            if (first_time_load):
+                file_name_part = org_file_name
+            else:
+                file_name_part = compute_file_name(cRates)
             weights, biases = initialize_variables( PREV_MODEL_EXIST,
                                                     weights_dir + 'weights' + file_name_part + '.pkl')
 
