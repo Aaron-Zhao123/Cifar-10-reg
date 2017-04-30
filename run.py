@@ -94,7 +94,7 @@ while (crates['fc1'] < 3.5):
             else:
                 retrain = retrain + 1
         if (acc > 0.808 or iter_cnt == 7):
-            file_name = compute_file_name(cRates)
+            file_name = compute_file_name(crates)
             crates['fc1'] = crates['fc1'] + 0.5
             acc_list.append((crates,acc))
             param = [
