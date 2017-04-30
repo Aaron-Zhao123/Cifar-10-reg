@@ -634,7 +634,7 @@ def main(argv = None):
 
                 file_name_part = compute_file_name(cRates)
                 with open(parent_dir + 'mask' + file_name_part + '.pkl','wb') as f:
-                    pickle.dump(weights_mask,f)
+                    pickle.dump((weights_mask, biases_mask),f)
             if (TRAIN):
                 file_name_part = compute_file_name(cRates)
                 save_pkl_model(weights, biases, weights_dir, 'weights' + file_name_part + '.pkl')
