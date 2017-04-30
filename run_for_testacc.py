@@ -23,8 +23,7 @@ crates = {
 retrain = 0
 
 parent_dir = '/Users/aaron/Projects/Mphil_project/tmp_cifar10/async_pruning/'
-parent_dir = 'assets'
-parent_dir = './'
+parent_dir = './assets/'
 with_biases = False
 
 run = 1
