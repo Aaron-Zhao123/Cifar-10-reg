@@ -2,13 +2,13 @@ import os
 import train
 import sys
 
-def compute_file_name(pcov, pfc):
+def compute_file_name(p):
     name = ''
-    name += 'cov' + str(int(pcov[0] * 10))
-    name += 'cov' + str(int(pcov[1] * 10))
-    name += 'fc' + str(int(pfc[0] * 10))
-    name += 'fc' + str(int(pfc[1] * 10))
-    name += 'fc' + str(int(pfc[2] * 10))
+    name += 'cov' + str(int(p['cov1'] * 10))
+    name += 'cov' + str(int(p['cov2'] * 10))
+    name += 'fc' + str(int(p['fc1'] * 10))
+    name += 'fc' + str(int(p['fc2'] * 10))
+    name += 'fc' + str(int(p['fc3'] * 10))
     return name
 
 acc_list = []
