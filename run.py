@@ -22,11 +22,11 @@ parent_dir = 'assets/'
 # lr = 1e-5
 lr = 1e-4
 crates = {
-    'cov1': 0.,
+    'cov1': 0.4,
     'cov2': 1.5,
     'fc1': 3.5,
     'fc2': 1.5,
-    'fc3': 0.
+    'fc3': 0.4
 }
 retrain_cnt = 0
 roundrobin = 0
@@ -93,9 +93,9 @@ while (crates['cov1'] < 2):
             file_name = compute_file_name(crates)
             # crates['fc1'] = crates['fc1'] + 0.5
             # crates['fc2'] = crates['fc2'] + 0.5
-            crates['fc3'] = crates['fc3'] + 0.2
+            crates['fc3'] = crates['fc3'] + 0.1
             # crates['cov2'] = crates['cov2'] + 0.5
-            crates['cov1'] = crates['cov1'] + 0.2
+            # crates['cov1'] = crates['cov1'] + 0.2
             acc_list.append((crates,acc))
             param = [
                 ('-first_time', False),
