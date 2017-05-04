@@ -83,6 +83,7 @@ while (crates['cov1'] < 2):
                 ('-lambda2', 1e-5)
                 ]
             acc = train.main(param)
+            sys.exit()
             if (acc > 0.823):
                 lr = 1e-4
                 retrain = 0
