@@ -68,7 +68,7 @@ while (crates['cov1'] < 2):
                 ('-lambda1', 1e-4),
                 ('-lambda2', 1e-5)
                 ]
-            _ = train.main(param)
+            # _ = train.main(param)
 
             # TEST
             param = [
