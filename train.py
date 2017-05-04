@@ -532,22 +532,6 @@ def main(argv = None):
         regulization_loss = l1_norm + l2_norm
         accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
-        saver = tf.train.Saver()
-
-
-        global_step = tf.contrib.framework.get_or_create_global_step()
-
-        num_batches_per_epoch = NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN / BATCH_SIZE
-        decay_steps = int(num_batches_per_epoch * NUM_EPOCHS_PER_DECAY)
-
-        # Decay the learning rate exponentially based on the number of steps.
-        lr_tf = tf.train.exponential_decay(INITIAL_LEARNING_RATE,
-                                      global_step,
-                                      decay_steps,
-                                      LEARNING_RATE_DECAY_FACTOR,
-                                      staircase=True)
-
-        # opt = tf.train.GradientDescentOptimizer(lr_tf)
         opt = tf.train.AdamOptimizer(lr)
         grads = opt.compute_gradients(loss_value)
         org_grads = [(ClipIfNotNone(grad), var) for grad, var in grads]
