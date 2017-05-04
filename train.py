@@ -538,7 +538,7 @@ def main(argv = None):
         new_grads = mask_gradients(weights, org_grads, weights_mask, biases, biases_mask, WITH_BIASES)
 
         # Apply gradients.
-        train_step = opt.apply_gradients(new_grads, global_step=global_step)
+        train_step = opt.apply_gradients(new_grads)
 
 
         init = tf.global_variables_initializer()
