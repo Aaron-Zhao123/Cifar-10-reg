@@ -146,7 +146,7 @@ def prune_info(weights, counting):
         (non_zeros, total) = calculate_non_zero_weights(weights['fc2'].eval())
         print('fc2 has prunned {} percent of its weights'.format((total-non_zeros)*100/total))
         (non_zeros, total) = calculate_non_zero_weights(weights['fc3'].eval())
-        print('fc3 has prunned {} percent of its weights'.format((total-non_zeros)*100/total))
+        print('fc3 has prunned {} percent of its weights'.format((total-non_zeros)*100/float(total)))
         print('some numbers: non zeros:{}, total:{}'.format(non_zeros, total))
     if (counting == 1):
         (non_zeros, total) = calculate_non_zero_weights(weights['cov1'])
