@@ -605,7 +605,7 @@ def main(argv = None):
                             prune_info(weights_new, 0)
                             print('test accuracy is {}'.format(test_acc))
                         # if (np.mean(train_acc) > 0.5):
-                            if (np.mean(accuracy_list) > 0.8 and train_acc >= 0.84 and test_acc > 0.826):
+                            if (test_acc > 0.826):
                                 print("training accuracy is large, show the list: {}".format(accuracy_list))
                                 break
                     _ = sess.run(train_step, feed_dict = {
