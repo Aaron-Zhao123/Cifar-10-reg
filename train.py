@@ -520,25 +520,35 @@ def main(argv = None):
 
         keep_prob = tf.placeholder(tf.float32)
         images = pre_process(x, TRAIN)
+        test_images = pre_process(x, False)
 
-        l1, l2, pred = cov_network(images, weights, biases, keep_prob)
+        weights_new = {}
+        keys = ['cov1', 'cov2', 'fc1', 'fc2', 'fc3']
+
+        for key in keys:
+            weights_new[key] = weights[key] * tf.constant(weights_mask[key], dtype=tf.float32)
+
+
+        l1, l2, pred = cov_network(images, weights_new, biases, keep_prob)
+        _, _, test_pred = cov_network(test_images, weights_new, biases, keep_prob)
         cross_entropy = tf.nn.softmax_cross_entropy_with_logits(logits = pred, labels = y)
-        loss_value = tf.reduce_mean(cross_entropy)
 
-        correct_prediction = tf.equal(tf.argmax(pred,1), tf.argmax(y,1))
+        correct_prediction = tf.equal(tf.argmax(test_pred,1), tf.argmax(y,1))
+        accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+
         l1_norm = lambda_1 * l1
         l2_norm = lambda_2 * l2
 
         regulization_loss = l1_norm + l2_norm
-        accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
         opt = tf.train.AdamOptimizer(lr)
+        loss_value = tf.reduce_mean(cross_entropy) + regulization_loss
         grads = opt.compute_gradients(loss_value)
         org_grads = [(ClipIfNotNone(grad), var) for grad, var in grads]
-        new_grads = mask_gradients(weights, org_grads, weights_mask, biases, biases_mask, WITH_BIASES)
+        # new_grads = mask_gradients(weights, org_grads, weights_mask, biases, biases_mask, WITH_BIASES)
 
         # Apply gradients.
-        train_step = opt.apply_gradients(new_grads)
+        train_step = opt.apply_gradients(org_grads)
 
 
         init = tf.global_variables_initializer()
@@ -554,14 +564,9 @@ def main(argv = None):
             sess.run(init)
 
             keys = ['cov1', 'cov2', 'fc1', 'fc2', 'fc3']
-            for key in keys:
-                sess.run(weights[key].assign(weights[key].eval()*weights_mask[key]))
-                if (WITH_BIASES == True):
-                    print("Pruning biases as well")
-                    sess.run(biases[key].assign(biases[key].eval()*biases_mask[key]))
 
             print('pre train pruning info')
-            prune_info(weights, 0)
+            prune_info(weights_new, 0)
             print(78*'-')
             start = time.time()
             if TRAIN == 1:
@@ -592,12 +597,15 @@ def main(argv = None):
                             save_pkl_model(weights, biases, weights_dir, 'weights' + file_name_part + '.pkl')
                             print("saved the network")
                         if (np.mean(accuracy_list) > 0.81 and train_acc >= 0.85):
+                            accuracy_list = np.zeros(20)
                             test_acc = sess.run(accuracy, feed_dict = {
                                                     x: images_test,
                                                     y: labels_test,
                                                     keep_prob: 1.0})
+                            prune_info(weights_new, 0)
+                            print('test accuracy is {}'.format(test_acc))
                         # if (np.mean(train_acc) > 0.5):
-                            if (np.mean(accuracy_list) > 0.8 and train_acc >= 0.84 and test_acc > 0.79):
+                            if (np.mean(accuracy_list) > 0.8 and train_acc >= 0.84 and test_acc > 0.826):
                                 print("training accuracy is large, show the list: {}".format(accuracy_list))
                                 break
                     _ = sess.run(train_step, feed_dict = {

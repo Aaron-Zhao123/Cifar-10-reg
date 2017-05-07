@@ -13,20 +13,16 @@ def compute_file_name(p):
 
 acc_list = []
 count = 0
-# pcov = [10., 66.]
-# pfc = [85., 66., 10.]
-pcov = [0., 0.]
-pfc = [0., 0., 0.]
 retrain = 0
 parent_dir = 'assets/'
 # lr = 1e-5
 lr = 1e-4
 crates = {
-    'cov1': 0.4,
-    'cov2': 1.5,
-    'fc1': 3.5,
-    'fc2': 1.5,
-    'fc3': 0.4
+    'cov1': 0.,
+    'cov2': 0.,
+    'fc1': 0.,
+    'fc2': 0.,
+    'fc3': 0.
 }
 retrain_cnt = 0
 roundrobin = 0
@@ -55,45 +51,39 @@ while (crates['cov1'] < 2):
             ]
         _ = train.main(param)
 
-        while (retrain < 10):
-            # TRAIN
-            param = [
-                ('-cRates', crates),
-                ('-first_time', False),
-                ('-train', True),
-                ('-prune', False),
-                ('-lr', lr),
-                ('-with_biases', with_biases),
-                ('-parent_dir', parent_dir),
-                ('-lambda1', 1e-4),
-                ('-lambda2', 1e-5)
-                ]
-            _ = train.main(param)
+        # TRAIN
+        param = [
+            ('-cRates', crates),
+            ('-first_time', False),
+            ('-train', True),
+            ('-prune', False),
+            ('-lr', lr),
+            ('-with_biases', with_biases),
+            ('-parent_dir', parent_dir),
+            ('-lambda1', 1e-4),
+            ('-lambda2', 1e-5)
+            ]
+        _ = train.main(param)
 
-            # TEST
-            param = [
-                ('-cRates', crates),
-                ('-first_time', False),
-                ('-train', False),
-                ('-prune', False),
-                ('-lr', lr),
-                ('-with_biases', with_biases),
-                ('-parent_dir', parent_dir),
-                ('-lambda1', 1e-4),
-                ('-lambda2', 1e-5)
-                ]
-            acc = train.main(param)
-            if (acc > 0.823):
-                lr = 1e-4
-                retrain = 0
-                break
-            else:
-                retrain = retrain + 1
-        if (acc > 0.808 or iter_cnt == 7):
+        # TEST
+        param = [
+            ('-cRates', crates),
+            ('-first_time', False),
+            ('-train', False),
+            ('-prune', False),
+            ('-lr', lr),
+            ('-with_biases', with_biases),
+            ('-parent_dir', parent_dir),
+            ('-lambda1', 1e-4),
+            ('-lambda2', 1e-5)
+            ]
+        acc = train.main(param)
+
+        if (acc > 0.823 or iter_cnt == 7):
             file_name = compute_file_name(crates)
-            # crates['fc1'] = crates['fc1'] + 0.5
+            crates['fc1'] = crates['fc1'] + 0.5
             # crates['fc2'] = crates['fc2'] + 0.5
-            crates['fc3'] = crates['fc3'] + 0.1
+            # crates['fc3'] = crates['fc3'] + 0.1
             # crates['cov2'] = crates['cov2'] + 0.5
             # crates['cov1'] = crates['cov1'] + 0.2
             acc_list.append((crates,acc))
@@ -115,8 +105,6 @@ while (crates['cov1'] < 2):
             break
         else:
             iter_cnt = iter_cnt + 1
-    if (iter_cnt > 7):
-        iter_cnt = iter_cnt - 1
     print('accuracy summary: {}'.format(acc_list))
 
 
