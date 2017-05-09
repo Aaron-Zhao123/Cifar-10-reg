@@ -592,6 +592,7 @@ def main(argv = None):
                         accuracy_list = np.concatenate((np.array([train_acc]),accuracy_list[0:19]))
                         # accuracy_list = np.concatenate((np.array([train_acc]),accuracy_list[0:4]))
                         if (i%(DISPLAY_FREQ*50) == 0 and i != 0 ):
+                            prune_info(weights_new, 0)
                             train_acc_list.append(train_acc)
                             file_name_part = compute_file_name(cRates)
                             save_pkl_model(weights, biases, weights_dir, 'weights' + file_name_part + '.pkl')
