@@ -79,9 +79,9 @@ while (crates['cov1'] < 3):
             ]
         acc = train.main(param)
 
-        if (acc > 0.808 or iter_cnt == 7):
+        if (acc > 0.823 or iter_cnt == 7):
             file_name = compute_file_name(crates)
-            crates['fc1'] = crates['fc1'] + 0.1
+            crates['fc1'] = crates['fc1'] + 0.05
             # crates['fc2'] = crates['fc2'] + 0.5
             # crates['fc3'] = crates['fc3'] + 0.1
             # crates['cov2'] = crates['cov2'] + 0.5

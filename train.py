@@ -399,7 +399,10 @@ def compute_file_name(thresholds):
     for key in keys_cov:
         name += 'cov'+ str(int(thresholds[key]*10))
     for key in keys_fc:
-        name += 'fc'+ str(int(thresholds[key]*10))
+        if (key == 'fc1'):
+            name += 'fc'+ str(int(thresholds[key]*100))
+        else:
+            name += 'fc'+ str(int(thresholds[key]*10))
     return name
 
 
@@ -606,7 +609,7 @@ def main(argv = None):
                             prune_info(weights_new, 0)
                             print('test accuracy is {}'.format(test_acc))
                         # if (np.mean(train_acc) > 0.5):
-                            if (test_acc > 0.826):
+                            if (test_acc > 0.823):
                                 print("training accuracy is large, show the list: {}".format(accuracy_list))
                                 break
                     _ = sess.run(train_step, feed_dict = {
