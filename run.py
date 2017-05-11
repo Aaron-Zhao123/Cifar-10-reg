@@ -46,7 +46,7 @@ while (crates['cov2'] < 2):
             ('-lr', lr),
             ('-with_biases', with_biases),
             ('-parent_dir', parent_dir),
-            ('-lambda1', 1e-4),
+            ('-lambda1', 1e-5),
             ('-lambda2', 1e-5)
             ]
         _ = train.main(param)
@@ -60,7 +60,7 @@ while (crates['cov2'] < 2):
             ('-lr', lr),
             ('-with_biases', with_biases),
             ('-parent_dir', parent_dir),
-            ('-lambda1', 1e-4),
+            ('-lambda1', 1e-5),
             ('-lambda2', 1e-5)
             ]
         _ = train.main(param)
@@ -74,15 +74,15 @@ while (crates['cov2'] < 2):
             ('-lr', lr),
             ('-with_biases', with_biases),
             ('-parent_dir', parent_dir),
-            ('-lambda1', 1e-4),
+            ('-lambda1', 1e-5),
             ('-lambda2', 1e-5)
             ]
         acc = train.main(param)
 
         if (acc > 0.823 or iter_cnt == 7):
             file_name = compute_file_name(crates)
-            # crates['fc1'] = crates['fc1'] + 0.01
-            crates['cov2'] = crates['cov2'] + 0.2
+            crates['fc1'] = crates['fc1'] + 0.01
+            # crates['cov2'] = crates['cov2'] + 0.2
             # crates['fc2'] = crates['fc2'] + 0.5
             # crates['fc3'] = crates['fc3'] + 0.1
             # crates['cov2'] = crates['cov2'] + 0.5
@@ -98,7 +98,7 @@ while (crates['cov2'] < 2):
                 ('-iter_cnt',iter_cnt),
                 ('-cRates',crates),
                 ('-save', True),
-                ('-lambda1', 1e-4),
+                ('-lambda1', 1e-5),
                 ('-lambda2', 1e-5),
                 ('-org_file_name', file_name)
                 ]
