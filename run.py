@@ -6,7 +6,7 @@ def compute_file_name(p):
     name = ''
     name += 'cov' + str(int(p['cov1'] * 10))
     name += 'cov' + str(int(p['cov2'] * 10))
-    name += 'fc' + str(int(p['fc1'] * 100))
+    name += 'fc' + str(int(round(p['fc1'] * 100)))
     name += 'fc' + str(int(p['fc2'] * 10))
     name += 'fc' + str(int(p['fc3'] * 10))
     return name
@@ -20,7 +20,7 @@ lr = 1e-4
 crates = {
     'cov1': 0.,
     'cov2': 0.,
-    'fc1': 1.70,
+    'fc1': 2.50,
     'fc2': 0.,
     'fc3': 0.
 }
@@ -81,9 +81,9 @@ while (crates['cov2'] < 2):
 
         if (acc > 0.823 or iter_cnt == 7):
             file_name = compute_file_name(crates)
-            crates['fc1'] = crates['fc1'] + 0.05
-            # crates['cov2'] = crates['cov2'] + 0.2
-            # crates['fc2'] = crates['fc2'] + 0.5
+            # crates['fc1'] = crates['fc1'] + 0.05
+            crates['cov2'] = crates['cov2'] + 0.5
+            crates['fc2'] = crates['fc2'] + 0.5
             # crates['fc3'] = crates['fc3'] + 0.1
             # crates['cov2'] = crates['cov2'] + 0.5
             # crates['cov1'] = crates['cov1'] + 0.2
