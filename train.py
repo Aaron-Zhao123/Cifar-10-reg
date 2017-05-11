@@ -577,7 +577,7 @@ def main(argv = None):
                 # for i in range(0,6):
                 for i in range(0,20000):
                     (batch_x, batch_y) = t_data.feed_next_batch(BATCH_SIZE)
-                    train_acc, cross_en = sess.run([accuracy, loss_value], feed_dict = {
+                    train_acc, cross_en, l1_loss, l2_loss= sess.run([accuracy, loss_value, l1_norm, l2_norm], feed_dict = {
                                     x: batch_x,
                                     y: batch_y,
                                     keep_prob: 1.0})
@@ -587,9 +587,11 @@ def main(argv = None):
                             cRates,
                             time.time() - start
                         ))
-                        print("accuracy is {} and cross entropy is {}".format(
+                        print("accuracy is {} and cross entropy is {}, l1 loss is {}, l2 loss is {}".format(
                             train_acc,
-                            cross_en
+                            cross_en,
+                            l1_loss,
+                            l2_loss
                         ))
                         # accuracy_list = np.concatenate((np.array([train_acc]),accuracy_list[0:49]))
                         accuracy_list = np.concatenate((np.array([train_acc]),accuracy_list[0:19]))
