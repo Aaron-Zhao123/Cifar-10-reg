@@ -555,7 +555,7 @@ def main(argv = None):
 
 
         init = tf.global_variables_initializer()
-        accuracy_list = np.zeros(20)
+        accuracy_list = np.zeros(10)
         # accuracy_list = np.zeros(5)
         train_acc_list = []
         # Launch the graph
@@ -594,8 +594,8 @@ def main(argv = None):
                             l2_loss
                         ))
                         # accuracy_list = np.concatenate((np.array([train_acc]),accuracy_list[0:49]))
-                        accuracy_list = np.concatenate((np.array([train_acc]),accuracy_list[0:19]))
-                        # accuracy_list = np.concatenate((np.array([train_acc]),accuracy_list[0:4]))
+                        # accuracy_list = np.concatenate((np.array([train_acc]),accuracy_list[0:19]))
+                        accuracy_list = np.concatenate((np.array([train_acc]),accuracy_list[0:9]))
                         if (i%(DISPLAY_FREQ*50) == 0 and i != 0 ):
                             prune_info(weights_new, 0)
                             train_acc_list.append(train_acc)
@@ -603,7 +603,7 @@ def main(argv = None):
                             save_pkl_model(weights, biases, weights_dir, 'weights' + file_name_part + '.pkl')
                             print("saved the network")
                         if (np.mean(accuracy_list) > 0.81 and train_acc >= 0.83):
-                            accuracy_list = np.zeros(20)
+                            # accuracy_list = np.zeros(20)
                             test_acc = sess.run(accuracy, feed_dict = {
                                                     x: images_test,
                                                     y: labels_test,
