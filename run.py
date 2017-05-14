@@ -19,16 +19,16 @@ parent_dir = 'assets/'
 lr = 1e-4
 crates = {
     'cov1': 0.,
-    'cov2': 0.2,
+    'cov2': 1.8,
     'fc1': 2.04,
-    'fc2': 0.,
+    'fc2': 0.2,
     'fc3': 0.
 }
 retrain_cnt = 0
 roundrobin = 0
 with_biases = False
 # Prune
-while (crates['cov2'] < 1.8):
+while (crates['cov2'] < 2):
     count = 0
     iter_cnt = 0
     while (iter_cnt < 7):
@@ -82,8 +82,8 @@ while (crates['cov2'] < 1.8):
         if (acc > 0.82 or iter_cnt == 7):
             file_name = compute_file_name(crates)
             # crates['fc1'] = crates['fc1'] + 0.05
-            crates['cov2'] = crates['cov2'] + 0.2
-            # crates['fc2'] = crates['fc2'] + 0.2
+            # crates['cov2'] = crates['cov2'] + 0.2
+            crates['fc2'] = crates['fc2'] + 0.2
             # crates['fc3'] = crates['fc3'] + 0.1
             # crates['cov2'] = crates['cov2'] + 0.5
             # crates['cov1'] = crates['cov1'] + 0.2
