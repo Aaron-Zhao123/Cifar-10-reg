@@ -19,9 +19,9 @@ parent_dir = 'assets/'
 lr = 1e-4
 crates = {
     'cov1': 0.,
-    'cov2': 1.2,
-    'fc1': 2.24,
-    'fc2': 1.2,
+    'cov2': 0.2,
+    'fc1': 2.04,
+    'fc2': 0.,
     'fc3': 0.
 }
 retrain_cnt = 0
@@ -83,7 +83,7 @@ while (crates['cov2'] < 1.8):
             file_name = compute_file_name(crates)
             # crates['fc1'] = crates['fc1'] + 0.05
             crates['cov2'] = crates['cov2'] + 0.2
-            crates['fc2'] = crates['fc2'] + 0.2
+            # crates['fc2'] = crates['fc2'] + 0.2
             # crates['fc3'] = crates['fc3'] + 0.1
             # crates['cov2'] = crates['cov2'] + 0.5
             # crates['cov1'] = crates['cov1'] + 0.2
