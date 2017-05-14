@@ -19,7 +19,7 @@ parent_dir = 'assets/'
 lr = 1e-4
 crates = {
     'cov1': 0.,
-    'cov2': 1.8,
+    'cov2': 1.6,
     'fc1': 2.04,
     'fc2': 0.2,
     'fc3': 0.
