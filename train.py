@@ -610,7 +610,7 @@ def main(argv = None):
                             file_name_part = compute_file_name(cRates)
                             save_pkl_model(weights, biases, weights_dir, 'weights' + file_name_part + '.pkl')
                             print("saved the network")
-                        if (np.mean(accuracy_list) > 0.81 and train_acc >= 0.83):
+                        if ((np.mean(accuracy_list) > 0.81 and train_acc >= 0.83) or train_acc>=0.88):
                             # accuracy_list = np.zeros(20)
                             test_acc = sess.run(accuracy, feed_dict = {
                                                     x: images_test,
