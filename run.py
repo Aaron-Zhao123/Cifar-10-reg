@@ -22,7 +22,7 @@ crates = {
     'cov2': 1.6,
     'fc1': 2.04,
     'fc2': 1.4,
-    'fc3': 0.2
+    'fc3': 0.
 }
 retrain_cnt = 0
 roundrobin = 0
@@ -84,7 +84,7 @@ while (crates['cov1'] < 2):
             # crates['fc1'] = crates['fc1'] + 0.05
             # crates['cov2'] = crates['cov2'] + 0.2
             # crates['fc2'] = crates['fc2'] + 0.2
-            crates['fc3'] = crates['fc3'] + 0.2
+            # crates['fc3'] = crates['fc3'] + 0.2
             # crates['cov2'] = crates['cov2'] + 0.5
             crates['cov1'] = crates['cov1'] + 0.2
             acc_list.append((crates,acc))
