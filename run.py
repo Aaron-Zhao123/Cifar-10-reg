@@ -21,14 +21,14 @@ crates = {
     'cov1': 0.,
     'cov2': 1.6,
     'fc1': 2.04,
-    'fc2': 0.2,
+    'fc2': 1.5,
     'fc3': 0.
 }
 retrain_cnt = 0
 roundrobin = 0
 with_biases = False
 # Prune
-while (crates['cov2'] < 2):
+while (crates['cov1'] < 2):
     count = 0
     iter_cnt = 0
     while (iter_cnt < 7):
@@ -83,10 +83,10 @@ while (crates['cov2'] < 2):
             file_name = compute_file_name(crates)
             # crates['fc1'] = crates['fc1'] + 0.05
             # crates['cov2'] = crates['cov2'] + 0.2
-            crates['fc2'] = crates['fc2'] + 0.2
-            # crates['fc3'] = crates['fc3'] + 0.1
+            # crates['fc2'] = crates['fc2'] + 0.2
+            crates['fc3'] = crates['fc3'] + 0.2
             # crates['cov2'] = crates['cov2'] + 0.5
-            # crates['cov1'] = crates['cov1'] + 0.2
+            crates['cov1'] = crates['cov1'] + 0.2
             acc_list.append((crates,acc))
             param = [
                 ('-first_time', False),
