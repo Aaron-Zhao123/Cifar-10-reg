@@ -392,17 +392,25 @@ def ClipIfNotNone(grad):
         return grad
     return tf.clip_by_value(grad, -1, 1)
 
-def compute_file_name(thresholds):
-    keys_cov = ['cov1', 'cov2']
-    keys_fc = ['fc1', 'fc2', 'fc3']
+# def compute_file_name(thresholds):
+#     keys_cov = ['cov1', 'cov2']
+#     keys_fc = ['fc1', 'fc2', 'fc3']
+#     name = ''
+#     for key in keys_cov:
+#         name += 'cov'+ str(int(thresholds[key]*10))
+#     for key in keys_fc:
+#         if (key == 'fc1'):
+#             name += 'fc'+ str(int(thresholds[key]*100))
+#         else:
+#             name += 'fc'+ str(int(thresholds[key]*10))
+#     return name
+def compute_file_name(p):
     name = ''
-    for key in keys_cov:
-        name += 'cov'+ str(int(thresholds[key]*10))
-    for key in keys_fc:
-        if (key == 'fc1'):
-            name += 'fc'+ str(int(thresholds[key]*100))
-        else:
-            name += 'fc'+ str(int(thresholds[key]*10))
+    name += 'cov' + str(int(round(p['cov1'] * 10)))
+    name += 'cov' + str(int(round(p['cov2'] * 10)))
+    name += 'fc' + str(int(round(p['fc1'] * 100)))
+    name += 'fc' + str(int(round(p['fc2'] * 10)))
+    name += 'fc' + str(int(round(p['fc3'] * 10)))
     return name
 
 
