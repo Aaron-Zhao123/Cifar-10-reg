@@ -22,7 +22,7 @@ crates = {
     'cov2': 1.6,
     'fc1': 2.04,
     'fc2': 1.5,
-    'fc3': 1.1
+    'fc3': 0.8
 }
 retrain_cnt = 0
 roundrobin = 0
