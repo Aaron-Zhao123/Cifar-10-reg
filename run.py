@@ -46,8 +46,10 @@ while (crates['fc2'] < 1.8):
             ('-lr', lr),
             ('-with_biases', with_biases),
             ('-parent_dir', parent_dir),
-            ('-lambda1', 1e-5),
-            ('-lambda2', 1e-5)
+            # ('-lambda1', 1e-5),
+            # ('-lambda2', 1e-5)
+            ('-lambda1', 0.),
+            ('-lambda2', 0.)
             ]
         _ = train.main(param)
 
