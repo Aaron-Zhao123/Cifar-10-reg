@@ -634,7 +634,7 @@ def main(argv = None):
                                     y: labels_test,
                                     keep_prob: 1.0})
             print("test accuracy is {}".format(test_acc))
-            if (r_next_iter):
+            if (save_for_next_iter):
                 print('saving for the next iteration of dynamic surgery')
                 file_name_part = compute_file_name(cRates)
                 file_name = 'weights'+ file_name_part+'.pkl'
