@@ -547,8 +547,8 @@ def main(argv = None):
         correct_prediction = tf.equal(tf.argmax(test_pred,1), tf.argmax(y,1))
         accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
-        l1_norm = lambda_1 * l1
-        l2_norm = lambda_2 * l2
+        l1_norm = 0. * l1
+        l2_norm = 0. * l2
 
         regulization_loss = l1_norm + l2_norm
 
