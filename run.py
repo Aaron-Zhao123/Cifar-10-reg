@@ -27,6 +27,8 @@ crates = {
 retrain_cnt = 0
 roundrobin = 0
 with_biases = False
+lambda1 = 1e-6
+lambda2 = 1e-6
 # Prune
 while (crates['fc2'] < 1.8):
     count = 0
@@ -46,10 +48,10 @@ while (crates['fc2'] < 1.8):
             ('-lr', lr),
             ('-with_biases', with_biases),
             ('-parent_dir', parent_dir),
-            # ('-lambda1', 1e-5),
-            # ('-lambda2', 1e-5)
-            ('-lambda1', 0.),
-            ('-lambda2', 0.)
+            ('-lambda1', lambda1),
+            ('-lambda2', lambda2)
+            # ('-lambda1', 0.),
+            # ('-lambda2', 0.)
             ]
         _ = train.main(param)
 
@@ -62,8 +64,8 @@ while (crates['fc2'] < 1.8):
             ('-lr', lr),
             ('-with_biases', with_biases),
             ('-parent_dir', parent_dir),
-            ('-lambda1', 1e-5),
-            ('-lambda2', 1e-5)
+            ('-lambda1', lambda1),
+            ('-lambda2', lambda2)
             ]
         _ = train.main(param)
 
@@ -76,8 +78,8 @@ while (crates['fc2'] < 1.8):
             ('-lr', lr),
             ('-with_biases', with_biases),
             ('-parent_dir', parent_dir),
-            ('-lambda1', 1e-5),
-            ('-lambda2', 1e-5)
+            ('-lambda1', lambda1),
+            ('-lambda2', lambda2)
             ]
         acc = train.main(param)
 
@@ -85,7 +87,7 @@ while (crates['fc2'] < 1.8):
             file_name = compute_file_name(crates)
             # crates['fc1'] = crates['fc1'] + 0.05
             # crates['cov2'] = crates['cov2'] + 0.2
-            crates['fc2'] = crates['fc2'] + 0.1
+            # crates['fc2'] = crates['fc2'] + 0.1
             # crates['fc3'] = crates['fc3'] + 0.2
             # crates['cov2'] = crates['cov2'] + 0.5
             # crates['cov1'] = crates['cov1'] + 0.2
@@ -100,11 +102,11 @@ while (crates['fc2'] < 1.8):
                 ('-iter_cnt',iter_cnt),
                 ('-cRates',crates),
                 ('-save', True),
-                ('-lambda1', 1e-5),
-                ('-lambda2', 1e-5),
+                ('-lambda1', lambda1),
+                ('-lambda2', lambda2),
                 ('-org_file_name', file_name)
                 ]
-            _ = train.main(param)
+            # _ = train.main(param)
             break
         else:
             iter_cnt = iter_cnt + 1

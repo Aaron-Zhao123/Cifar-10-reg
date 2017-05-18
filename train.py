@@ -547,8 +547,10 @@ def main(argv = None):
         correct_prediction = tf.equal(tf.argmax(test_pred,1), tf.argmax(y,1))
         accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
-        l1_norm = 0. * l1
-        l2_norm = 0. * l2
+        # l1_norm = 0. * l1
+        # l2_norm = 0. * l2
+        l1_norm = lambda_1 * l1
+        l2_norm = lambda_2 * l2
 
         regulization_loss = l1_norm + l2_norm
 
@@ -583,7 +585,7 @@ def main(argv = None):
             if TRAIN == 1:
                 # for i in range(0,60000):
                 # for i in range(0,6):
-                for i in range(0,40000):
+                for i in range(0,20000):
                     (batch_x, batch_y) = t_data.feed_next_batch(BATCH_SIZE)
                     train_acc, cross_en, l1_loss, l2_loss= sess.run([accuracy, loss_value, l1_norm, l2_norm], feed_dict = {
                                     x: batch_x,
@@ -608,8 +610,6 @@ def main(argv = None):
                             prune_info(weights_new, 0)
                             train_acc_list.append(train_acc)
                             file_name_part = compute_file_name(cRates)
-                            save_pkl_model(weights, biases, weights_dir, 'weights' + file_name_part + '.pkl')
-                            print("saved the network")
                         if ((np.mean(accuracy_list) > 0.81 and train_acc >= 0.83) or train_acc>=0.88):
                             # accuracy_list = np.zeros(20)
                             test_acc = sess.run(accuracy, feed_dict = {
@@ -620,8 +620,10 @@ def main(argv = None):
                             print('test accuracy is {}'.format(test_acc))
                         # if (np.mean(train_acc) > 0.5):
                             if (test_acc > 0.82):
+                                print("save the network only if it breaks thresholds")
+                                save_pkl_model(weights, biases, weights_dir, 'weights' + file_name_part + '.pkl')
                                 print("training accuracy is large, show the list: {}".format(accuracy_list))
-                                break
+                                # break
                     _ = sess.run(train_step, feed_dict = {
                                     x: batch_x,
                                     y: batch_y,
@@ -632,7 +634,7 @@ def main(argv = None):
                                     y: labels_test,
                                     keep_prob: 1.0})
             print("test accuracy is {}".format(test_acc))
-            if (save_for_next_iter):
+            if (r_next_iter):
                 print('saving for the next iteration of dynamic surgery')
                 file_name_part = compute_file_name(cRates)
                 file_name = 'weights'+ file_name_part+'.pkl'
@@ -643,7 +645,7 @@ def main(argv = None):
                     pickle.dump((weights_mask, biases_mask),f)
             if (TRAIN):
                 file_name_part = compute_file_name(cRates)
-                save_pkl_model(weights, biases, weights_dir, 'weights' + file_name_part + '.pkl')
+                # save_pkl_model(weights, biases, weights_dir, 'weights' + file_name_part + '.pkl')
                 with open(parent_dir + 'training_data'+file_name_part+'.pkl', 'wb') as f:
                     pickle.dump(train_acc_list, f)
 
