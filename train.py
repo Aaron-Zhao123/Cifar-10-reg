@@ -583,7 +583,7 @@ def main(argv = None):
             if TRAIN == 1:
                 # for i in range(0,60000):
                 # for i in range(0,6):
-                for i in range(0,20000):
+                for i in range(0,40000):
                     (batch_x, batch_y) = t_data.feed_next_batch(BATCH_SIZE)
                     train_acc, cross_en, l1_loss, l2_loss= sess.run([accuracy, loss_value, l1_norm, l2_norm], feed_dict = {
                                     x: batch_x,
