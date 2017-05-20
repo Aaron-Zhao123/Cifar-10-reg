@@ -53,7 +53,7 @@ while (crates['fc2'] < 1.8):
             # ('-lambda1', 0.),
             # ('-lambda2', 0.)
             ]
-        _ = train.main(param)
+        # _ = train.main(param)
 
         # TRAIN
         param = [
