@@ -619,7 +619,7 @@ def main(argv = None):
                             prune_info(weights_new, 0)
                             print('test accuracy is {}'.format(test_acc))
                         # if (np.mean(train_acc) > 0.5):
-                            if (test_acc >= 0.82):
+                            if (test_acc >= 0.81):
                                 print("save the network only if it breaks thresholds")
                                 save_pkl_model(weights, biases, weights_dir, 'weightssave' + file_name_part + '.pkl')
                                 print("training accuracy is large, show the list: {}".format(accuracy_list))
