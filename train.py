@@ -610,7 +610,7 @@ def main(argv = None):
                             prune_info(weights_new, 0)
                             train_acc_list.append(train_acc)
                             file_name_part = compute_file_name(cRates)
-                        if ((np.mean(accuracy_list) > 0.81 and train_acc >= 0.83) or train_acc>=0.88):
+                        if ((np.mean(accuracy_list) > 0.81 and train_acc >= 0.83) or train_acc>=0.85):
                             # accuracy_list = np.zeros(20)
                             test_acc = sess.run(accuracy, feed_dict = {
                                                     x: images_test,
@@ -619,9 +619,9 @@ def main(argv = None):
                             prune_info(weights_new, 0)
                             print('test accuracy is {}'.format(test_acc))
                         # if (np.mean(train_acc) > 0.5):
-                            if (test_acc > 0.82):
+                            if (test_acc >= 0.82):
                                 print("save the network only if it breaks thresholds")
-                                save_pkl_model(weights, biases, weights_dir, 'weights' + file_name_part + '.pkl')
+                                save_pkl_model(weights, biases, weights_dir, 'weightssave' + file_name_part + '.pkl')
                                 print("training accuracy is large, show the list: {}".format(accuracy_list))
                                 # break
                     _ = sess.run(train_step, feed_dict = {
@@ -638,7 +638,7 @@ def main(argv = None):
                 print('saving for the next iteration of dynamic surgery')
                 file_name_part = compute_file_name(cRates)
                 file_name = 'weights'+ file_name_part+'.pkl'
-                save_pkl_model(weights, biases, parent_dir, file_name)
+                # save_pkl_model(weights, biases, parent_dir, file_name)
 
                 file_name_part = compute_file_name(cRates)
                 with open(parent_dir + 'mask' + file_name_part + '.pkl','wb') as f:
