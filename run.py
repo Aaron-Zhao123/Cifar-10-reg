@@ -27,8 +27,8 @@ crates = {
 retrain_cnt = 0
 roundrobin = 0
 with_biases = False
-lambda1 = 1e-6
-lambda2 = 1e-6
+lambda1 = 1e-5
+lambda2 = 1e-5
 # Prune
 while (crates['fc2'] < 1.8):
     count = 0
